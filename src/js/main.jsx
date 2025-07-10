@@ -10,6 +10,7 @@ import '../styles/index.css'
 
 // components
 import Home from './components/Home';
+import TextInp from './components/Input';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

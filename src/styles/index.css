@@ -1,11 +1,45 @@
-/* 
+body {
+    background-color: rgba(114, 212, 103, 0.9);
+}
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+input {
+    background-color: rgba(231, 108, 108, 0.9);
+    border-radius: 25px;
+}
 
-*/
+
+li {
+    list-style-type: none;
+}
+
+.todo-item {
+    position: relative;
+    padding-right: 0;
+}
+
+.delete-btn {
+    display: none;
+    color: red ;
+    cursor: pointer;
+    font-weight: bold;
+    padding-left: 8px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    position: static;
+}
+
+ul li.todo-item:hover .delete-btn {
+    display: inline;
+}
+
+.backgroundBox {
+      background-color: rgb(230, 220, 220);
+    box-shadow: 0 4px 16px 0 rgba(0,0,0,0.15);
+    padding: 20px;
+    margin: 20px auto;
+    width: auto;
+    display: inline-block;
+    border-radius: 16px; /* optional, for a paper look */
+    min-width: 250px; 
+}

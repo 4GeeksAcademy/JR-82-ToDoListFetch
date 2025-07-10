@@ -1,28 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import TextInp from "./Input";
 
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-            
+    const [listArray, setListArray] = useState([]);
 
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+    const addItem = (item) => {
+        if (item.trim() !== "") {
+            setListArray([...listArray, item.trim()]);
+        }
+    };
+
+    const removeItem = (idxToRemove) => {
+        setListArray(listArray.filter((_, idx) => idx !== idxToRemove));
+    };
+
+    return (
+        <div className="text-center">
+            <h1><strong>To Do List</strong></h1>
+            <div className="backgroundBox">
+                <TextInp onAdd={addItem} />
+                <ul>
+                    {listArray.map((item, idx) => (
+                        <li key={idx} className="todo-item">
+                            {item}
+                            <span
+                                className="delete-btn"
+                                onClick={() => removeItem(idx)}
+                                title="Delete"
+                            >
+                                ❌
+                            </span>
+						</li>
+                    ))}
+                </ul>
+                <p>{listArray.length} Items Left</p>
+            </div>
+        </div>
+    );
 };
 
 export default Home;
