@@ -7,7 +7,6 @@ import rigoImage from "../../img/rigo-baby.jpg";
 const URI = `https://playground.4geeks.com/todo`
 
 
-//create your first component
 const Home = () => {
    
    let [userName, setUserName] = useState(`morbing`)
@@ -99,7 +98,7 @@ function getUsersToDoList() {
 
     return (
         <div className="text-center">
-            <h1><strong>To Do List</strong></h1>
+            <h1 className="custom-underline"><strong>My Anime</strong></h1>
             <div className="backgroundBox">
                 <TextInp onAdd={addItem} />
                 <ul>
@@ -140,6 +139,7 @@ function getUsersToDoList() {
                     Clear All
                 </button>
             </div>
+
         </div>
     );
 };
