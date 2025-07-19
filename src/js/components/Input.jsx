@@ -1,12 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 const TextInp = ({ onAdd }) => {
     const [inputValue, setInputValue] = useState("");
 
-    const handleChange = (e) => setInputValue(e.target.value);
-
-    const handleKeyDown = (e) => {
-        if (e.key === "Enter" && inputValue.trim() !== "") {
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter" && inputValue.trim()) {
             onAdd(inputValue);
             setInputValue("");
         }
@@ -14,11 +12,12 @@ const TextInp = ({ onAdd }) => {
 
     return (
         <input
+            className="form-control"
             type="text"
+            placeholder="Add a new anime..."
             value={inputValue}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            placeholder="Add a new task"
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyPress={handleKeyPress}
         />
     );
 };

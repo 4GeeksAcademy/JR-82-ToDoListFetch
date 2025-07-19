@@ -1,147 +1,110 @@
 import React, { useEffect, useState } from "react";
 import TextInp from "./Input";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-const URI = `https://playground.4geeks.com/todo`
-
+const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev/";
 
 const Home = () => {
-   
-   let [userName, setUserName] = useState(`morbing`)
-   
-   
-   useEffect(() => {
-    CreateUser(userName);
-    getUsersToDoList();
-}, []); 
-// make the create user .then 
-function CreateUser(username) {
-    fetch(`https://playground.4geeks.com/todo/users/${username}`, {
-        method: "POST",
-        body: JSON.stringify([]),
-        headers: {
-            "Content-Type": "application/json"
-        }
+  const [listArray, setListArray] = useState([]);
+
+  useEffect(() => {
+    fetchAnimeList();
+  }, []);
+
+  // Fetch all anime items
+  const fetchAnimeList = () => {
+    fetch(`${API_BASE}/anime_list`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => {
+        setListArray(data);
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  };
+
+  // Add new item
+  const addItem = (label) => {
+    if (!label.trim()) return;
+
+    fetch(`${API_BASE}/anime_list`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ label: label.trim(), done: false }),
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log("User created:", data);
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to add item");
+        return res.json();
+      })
+      .then(() => {
+        fetchAnimeList();
+      })
+      .catch((error) => {
+        console.error("Add error:", error);
+      });
+  };
+
+  // Remove item by ID
+  const removeItem = (id) => {
+    fetch(`${API_BASE}/anime_list/${id}`, {
+      method: "DELETE",
     })
-    .catch(error => {
-        console.error("Error creating user:", error);
-    });
-}
-   
-   
-function getUsersToDoList() {
-    fetch("https://playground.4geeks.com/todo/users/" + userName)
-        .then(response => response.json()) 
-        .then(data => {
-            setListArray(data.todos);      
-            console.log(data);
-        })
-        .catch(error => {
-            console.error(error);
-        });
-}
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to delete item");
+        fetchAnimeList();
+      })
+      .catch((error) => {
+        console.error("Delete error:", error);
+      });
+  };
 
-   
-    const [listArray, setListArray] = useState([]);
+  // Clear all items
+  const clearAll = () => {
+    Promise.all(
+      listArray.map((item) =>
+        fetch(`${API_BASE}/anime_list/${item.id}`, { method: "DELETE" })
+      )
+    )
+      .then(() => fetchAnimeList())
+      .catch((error) => console.error("Clear all error:", error));
+  };
 
-    const addItem = (item) => {
+  return (
+    <div className="text-center">
+      <h1>
+        <strong>My Anime List</strong>
+      </h1>
+      <div className="backgroundBox">
+        <TextInp onAdd={addItem} />
 
-        fetch('https://playground.4geeks.com/todo/todos/morbing', {
-            method: "POST",
-            body: JSON.stringify({ label: item.trim(), done: false}),
-            headers: {
-                "Content-Type": "application/json"
-            }
-     })
-     .then(resp => {
-          console.log(resp.ok); 
-          console.log(resp.status); 
-                getUsersToDoList();
-        console.log("Item added:", item.trim());
-          return resp.json();
-     })
-     .then(data => {
-         
-          console.log(data); 
-     })
-     .catch(error => {
-          
-          console.log(error);
-     });
+        <ul>
+          {listArray.map((item) => (
+            <li key={item.id} className="todo-item">
+              {item.label}
+              <span
+                className="delete-btn"
+                onClick={() => removeItem(item.id)}
+                title="Delete"
+                style={{ cursor: "pointer", marginLeft: "10px" }}
+              >
+                ❌
+              </span>
+            </li>
+          ))}
+        </ul>
 
-    };
+        <p>{listArray.length} Items</p>
 
-    const removeItem = (itemId) => {
-
-        fetch(`https://playground.4geeks.com/todo/todos/${itemId}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log("Item deleted successfully");
-                getUsersToDoList();
-            }
-        })
-        .catch(error => {
-            console.error("Error deleting item:", error);
-        });
-    };
-
-    return (
-        <div className="text-center">
-            <h1 className="custom-underline"><strong>My Anime</strong></h1>
-            <div className="backgroundBox">
-                <TextInp onAdd={addItem} />
-                <ul>
-                    {listArray.map((item, idx) => (
-                        <li key={idx} className="todo-item">
-                            {item.label}
-                            <span
-                                className="delete-btn"
-                                onClick={() => removeItem(item.id)}
-                                title="Delete"
-                            >
-                                ❌
-                            </span>
-						</li>
-                    ))}
-                </ul>
-                <p>{listArray.length} Items Left</p>
-                <button
-                    className="btn btn-danger"
-                    onClick={() => {
-                        Promise.all(listArray.map(item => 
-                            fetch(`https://playground.4geeks.com/todo/todos/${item.id}`, {
-                                method: "DELETE",
-                                headers: {
-                                    "Content-Type": "application/json"
-                                }
-                            })
-                        ))
-                        .then(() => {
-                            console.log("All items deleted successfully");
-                            getUsersToDoList();
-                        })
-                        .catch(error => {
-                            console.error("Error deleting all items:", error);
-                        });
-                    }}
-                >
-                    Clear All
-                </button>
-            </div>
-
-        </div>
-    );
+        <button className="btn btn-danger" onClick={clearAll}>
+          Clear All
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default Home;
