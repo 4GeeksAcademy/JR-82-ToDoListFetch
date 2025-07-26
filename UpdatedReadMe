@@ -10,3 +10,9 @@ then you do python app.py
 then change the 5000 port to public port
 then all you have to do is npm run start
 and it should work
+
+_________________________________________________________________________
+
+on each codespace load up always do python app.py
+change the port to public
+and do rpm run start then it works

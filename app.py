@@ -14,6 +14,7 @@ class Anime(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(200), nullable=False)
     done = db.Column(db.Boolean, default=False)
+    category = db.Column(db.String(100), nullable=False, default='general')
 
 # create db tables
 with app.app_context():
@@ -21,13 +22,15 @@ with app.app_context():
 
 @app.route("/anime_list", methods=["GET"])
 def get_anime_list():
-    animes = Anime.query.all()
-    return jsonify([{"id": a.id, "label": a.label, "done": a.done} for a in animes])
+    category = request.args.get('category', 'general')  # Default to 'general' if no category specified
+    animes = Anime.query.filter_by(category=category).all()
+    return jsonify([{"id": a.id, "label": a.label, "done": a.done, "category": a.category} for a in animes])
 
 @app.route("/anime_list", methods=["POST"])
 def add_anime():
     data = request.get_json()
-    new_anime = Anime(label=data["label"], done=False)
+    category = data.get('category', 'general')  # Default to 'general' if no category specified
+    new_anime = Anime(label=data["label"], done=False, category=category)
     db.session.add(new_anime)
     db.session.commit()
     return jsonify({"message": "Anime added"}), 201
@@ -41,6 +44,11 @@ def delete_anime(id):
         return jsonify({"message": "Anime deleted"}), 200
     else:
         return jsonify({"error": "Anime not found"}), 404
+
+@app.route("/categories", methods=["GET"])
+def get_categories():
+    categories = db.session.query(Anime.category).distinct().all()
+    return jsonify([category[0] for category in categories])
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

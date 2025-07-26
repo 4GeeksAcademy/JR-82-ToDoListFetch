@@ -1,33 +1,33 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import TextInp from "./Input";
-import {Link} from "react-router-dom";
-
 
 const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev";
 
-const Home = () => {
-  const [listArray, setListArray] = useState([]);
+const Shounen = () => {
+  const [shounenList, setShounenList] = useState([]);
 
   useEffect(() => {
-    fetchAnimeList();
+    // You can add a specific endpoint for shounen anime or filter the existing list
+    fetchShounenList();
   }, []);
 
-  // Fetch all anime items
-  const fetchAnimeList = () => {
-    fetch(`${API_BASE}/anime_list?category=general`)
+  const fetchShounenList = () => {
+    // Fetch only shounen category anime
+    fetch(`${API_BASE}/anime_list?category=shounen`)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
       })
       .then((data) => {
-        setListArray(data);
+        setShounenList(data);
       })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
   };
 
-  // Add new item
+  // Add new shounen item
   const addItem = (label) => {
     if (!label.trim()) return;
 
@@ -36,14 +36,14 @@ const Home = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ label: label.trim(), done: false, category: "general" }),
+      body: JSON.stringify({ label: label.trim(), done: false, category: "shounen" }),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to add item");
         return res.json();
       })
       .then(() => {
-        fetchAnimeList();
+        fetchShounenList();
       })
       .catch((error) => {
         console.error("Add error:", error);
@@ -57,7 +57,7 @@ const Home = () => {
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to delete item");
-        fetchAnimeList();
+        fetchShounenList();
       })
       .catch((error) => {
         console.error("Delete error:", error);
@@ -67,14 +67,14 @@ const Home = () => {
   return (
     <div className="text-center">
       <h1>
-        <strong>My Anime List</strong>
+        <strong>Shounen Anime List</strong>
       </h1>
       <div className="backgroundBox">
-        <p><strong>{listArray.length} Anime</strong></p>
+        <p><strong>{shounenList.length} Shounen Anime</strong></p>
         <TextInp onAdd={addItem} />
-
+        
         <ul>
-          {listArray.map((item) => (
+          {shounenList.map((item) => (
             <li key={item.id} className="todo-item">
               {item.label}
               <span
@@ -87,18 +87,19 @@ const Home = () => {
               </span>
             </li>
           ))}
-          <br />
-          <Link to="/shounen">
-          <button>
-<strong>
-  Go to Shounen List
-</strong>
-          </button>
-          </Link>
         </ul>
+        
+        <br />
+        <Link to="/">
+          <button>
+            <strong>
+              Back to Main List
+            </strong>
+          </button>
+        </Link>
       </div>
     </div>
   );
 };
 
-export default Home;
+export default Shounen;
