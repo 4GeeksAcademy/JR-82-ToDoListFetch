@@ -1,33 +1,33 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import TextInp from "./Input";
-import {Link} from "react-router-dom";
-
 
 const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev";
 
-const Home = () => {
-  const [listArray, setListArray] = useState([]);
+const Thriller = () => {
+  const [thrillerList, setThrillerList] = useState([]);
 
   useEffect(() => {
-    fetchAnimeList();
+    // You can add a specific endpoint for thriller anime or filter the existing list
+    fetchThrillerList();
   }, []);
 
-  // Fetch all anime items
-  const fetchAnimeList = () => {
-    fetch(`${API_BASE}/anime_list?category=general`)
+  const fetchThrillerList = () => {
+    // Fetch only thriller category anime
+    fetch(`${API_BASE}/anime_list?category=thriller`)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
       })
       .then((data) => {
-        setListArray(data);
+        setThrillerList(data);
       })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
   };
 
-  // Add new item
+  // Add new thriller item
   const addItem = (label) => {
     if (!label.trim()) return;
 
@@ -36,14 +36,14 @@ const Home = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ label: label.trim(), done: false, category: "general" }),
+      body: JSON.stringify({ label: label.trim(), done: false, category: "thriller" }),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to add item");
         return res.json();
       })
       .then(() => {
-        fetchAnimeList();
+        fetchThrillerList();
       })
       .catch((error) => {
         console.error("Add error:", error);
@@ -57,7 +57,7 @@ const Home = () => {
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to delete item");
-        fetchAnimeList();
+        fetchThrillerList();
       })
       .catch((error) => {
         console.error("Delete error:", error);
@@ -67,73 +67,23 @@ const Home = () => {
   return (
     <div className="text-center">
       <h1>
-        <strong>My Anime List</strong>
+        <strong>Thriller Anime List</strong>
       </h1>
       <div className="backgroundBox">
-        <p><strong>{listArray.length} Anime</strong></p>
+        <p><strong>{thrillerList.length} Thriller Anime</strong></p>
         <p>
-                    <Link to="/shounen">
-          <button>
-<strong>
-  Go to Shounen List
-</strong>
-          </button>
+          <Link to="/">
+            <button>
+              <strong>
+                Back to Main List
+              </strong>
+            </button>
           </Link>
-                    <Link to="/isekai">
-          <button>
-<strong>
-  Go to Isekai List
-</strong>
-          </button>
-          </Link>
-          <Link to="/thriller">
-          <button>
-<strong>
-  Go to Thriller List
-</strong>
-          </button>
-          </Link>
-          <Link to="/fantasy">
-          <button>
-<strong>
-  Go to Fantasy List
-</strong>
-          </button>
-          </Link>
-          <Link to="/sliceOfLife">
-          <button>
-<strong>
-  Go to Slice of Life List
-</strong>
-          </button>
-          </Link>
-          <br />
-          <br />
-          <Link to="/top10">
-          <button>
-<strong>
-  Go to Top 10 List
-</strong>
-          </button>
-          </Link>
-          <Link to="/movies">
-          <button>
-<strong>
-  Go to Movies List
-</strong>
-          </button>
-        </Link>
-          <Link to="/dropped">
-          <button>
-<strong>  Go to Dropped List
-</strong>
-          </button>   
-        </Link>
         </p>
         <TextInp onAdd={addItem} />
-
+        
         <ul>
-          {listArray.sort((a, b) => a.label.localeCompare(b.label)).map((item) => (
+          {thrillerList.map((item) => (
             <li key={item.id} className="todo-item">
               {item.label}
               <span
@@ -146,11 +96,10 @@ const Home = () => {
               </span>
             </li>
           ))}
-          <br />
         </ul>
       </div>
     </div>
   );
 };
 
-export default Home;
+export default Thriller;

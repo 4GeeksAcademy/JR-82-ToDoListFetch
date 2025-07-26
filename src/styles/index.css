@@ -13,7 +13,11 @@ p {
 }
 
 li {
-    list-style-type: none;
+    list-style: none;
+}
+
+.top10A {
+    list-style: number;
 }
 
 .todo-item {
@@ -40,6 +44,7 @@ ul li.todo-item:hover .delete-btn {
 ul {
     padding: 0;
     margin: 0;
+    padding-top: 15px;
 }
 
 .backgroundBox {

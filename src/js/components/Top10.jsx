@@ -4,30 +4,30 @@ import TextInp from "./Input";
 
 const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev";
 
-const Shounen = () => {
-  const [shounenList, setShounenList] = useState([]);
+const Top10 = () => {
+  const [top10List, setTop10List] = useState([]);
 
   useEffect(() => {
-    // You can add a specific endpoint for shounen anime or filter the existing list
-    fetchShounenList();
+    // You can add a specific endpoint for top 10 anime or filter the existing list
+    fetchTop10List();
   }, []);
 
-  const fetchShounenList = () => {
-    // Fetch only shounen category anime
-    fetch(`${API_BASE}/anime_list?category=shounen`)
+  const fetchTop10List = () => {
+    // Fetch only top 10 anime
+    fetch(`${API_BASE}/anime_list?category=top10`)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
       })
       .then((data) => {
-        setShounenList(data);
+        setTop10List(data);
       })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
   };
 
-  // Add new shounen item
+  // Add new top 10 item
   const addItem = (label) => {
     if (!label.trim()) return;
 
@@ -36,14 +36,14 @@ const Shounen = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ label: label.trim(), done: false, category: "shounen" }),
+      body: JSON.stringify({ label: label.trim(), done: false, category: "top10" }),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to add item");
         return res.json();
       })
       .then(() => {
-        fetchShounenList();
+        fetchTop10List();
       })
       .catch((error) => {
         console.error("Add error:", error);
@@ -57,7 +57,7 @@ const Shounen = () => {
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to delete item");
-        fetchShounenList();
+        fetchTop10List();
       })
       .catch((error) => {
         console.error("Delete error:", error);
@@ -67,10 +67,9 @@ const Shounen = () => {
   return (
     <div className="text-center">
       <h1>
-        <strong>Shounen Anime List</strong>
+        <strong>Top 10 Anime</strong>
       </h1>
       <div className="backgroundBox">
-        <p><strong>{shounenList.length} Shounen Anime</strong></p>
         <p>
           <Link to="/">
             <button>
@@ -83,8 +82,8 @@ const Shounen = () => {
         <TextInp onAdd={addItem} />
         
         <ul>
-          {shounenList.map((item) => (
-            <li key={item.id} className="todo-item">
+          {top10List.map((item) => (
+            <li id="top10A" key={item.id} className="todo-item">
               {item.label}
               <span
                 className="delete-btn"
@@ -102,4 +101,4 @@ const Shounen = () => {
   );
 };
 
-export default Shounen;
+export default Top10;
