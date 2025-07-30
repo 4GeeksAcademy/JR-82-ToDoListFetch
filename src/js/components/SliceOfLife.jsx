@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import TextInp from "./Input";
+import Kaori from "../../img/Kaori.png"; // Ensure the path is correct based on your project structure
+import toradora from "../../img/toradora.png"; // Ensure the path is correct based on your project structure
 
 const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev";
 
@@ -69,6 +71,8 @@ const SliceOfLife = () => {
       <h1>
         <strong>Slice of Life Anime List</strong>
       </h1>
+      <img src={Kaori} alt="Kaori" id="Kaori" />
+      <img src={toradora} alt="" id="toradora" />
       <div className="backgroundBox">
         <p><strong>{sliceOfLifeList.length} Slice of Life Anime</strong></p>
         <p>

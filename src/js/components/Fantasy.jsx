@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import TextInp from "./Input";
+import ubel from "../../img/ubel.png"; // Ensure the path is correct based on your project structure
+import Goblin from "../../img/Goblin.webp"; // Ensure the path is correct based on your project structure
 
 const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev";
 
@@ -69,6 +71,8 @@ const Fantasy = () => {
       <h1>
         <strong>Fantasy Anime List</strong>
       </h1>
+      <img src={ubel} alt="Frieren" id="ubel" />
+      <img src={Goblin} alt="Lucy" id="Goblin" />
       <div className="backgroundBox">
         <p><strong>{fantasyList.length} Fantasy Anime</strong></p>
         <p>

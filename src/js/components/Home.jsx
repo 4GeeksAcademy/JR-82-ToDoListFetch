@@ -1,7 +1,8 @@
 import React, { useEffect, useState, } from "react";
 import TextInp from "./Input";
 import {Link} from "react-router-dom";
-
+import PowerImage from "../../img/PowerImage.webp"; // Ensure the path is correct based on your project structure
+import ZeroTwo from "../../img/ZeroTwo.webp"; // Ensure the path is correct based on your project structure
 
 const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev";
 
@@ -66,6 +67,8 @@ const Home = () => {
 
   return (
     <div className="text-center">
+      <img src={PowerImage} id="power-image"  alt="" />
+      <img src={ZeroTwo} id="zeroTwo" alt="" />
       <h1>
         <strong>My Anime List</strong>
       </h1>
@@ -74,9 +77,9 @@ const Home = () => {
         <p>
                     <Link to="/shounen">
           <button>
-<strong>
-  Go to Shounen List
-</strong>
+            <strong>
+              Go to Shounen List
+            </strong>
           </button>
           </Link>
                     <Link to="/isekai">
@@ -93,6 +96,8 @@ const Home = () => {
 </strong>
           </button>
           </Link>
+          <br />
+          <br />
           <Link to="/fantasy">
           <button>
 <strong>
@@ -107,8 +112,6 @@ const Home = () => {
 </strong>
           </button>
           </Link>
-          <br />
-          <br />
           <Link to="/top10">
           <button>
 <strong>
@@ -116,6 +119,8 @@ const Home = () => {
 </strong>
           </button>
           </Link>
+          <br />
+          <br />
           <Link to="/movies">
           <button>
 <strong>

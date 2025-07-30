@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import TextInp from "./Input";
+import Goku from "../../img/Goku.png"; // Ensure the path is correct based on your project structure
+import Ichigo from "../../img/Ichigo.webp"; // Ensure the path is correct based on your project structure
 
 const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev";
 
@@ -69,6 +71,8 @@ const Shounen = () => {
       <h1>
         <strong>Shounen Anime List</strong>
       </h1>
+      <img src={Goku} alt="Goku" id="Goku" />
+      <img src={Ichigo} alt="Ichigo" id="Ichigo" />
       <div className="backgroundBox">
         <p><strong>{shounenList.length} Shounen Anime</strong></p>
         <p>

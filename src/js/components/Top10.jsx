@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import TextInp from "./Input";
+import stein from "../../img/Stein.png"; // Ensure the path is correct based on your project structure
+import steins from "../../img/Steins.png"; // Ensure the path is correct based on your project structure
 
 const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev";
 
@@ -69,6 +71,8 @@ const Top10 = () => {
       <h1>
         <strong>Top 10 Anime</strong>
       </h1>
+      <img src= {stein} alt="" id="stein" />
+      <img src={steins} alt="" id="steins" />
       <div className="backgroundBox">
         <p>
           <Link to="/">

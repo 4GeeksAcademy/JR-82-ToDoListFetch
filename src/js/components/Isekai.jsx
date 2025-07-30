@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import TextInp from "./Input";
+import Rimuru from "../../img/Rimuru.webp"; // Ensure the path is correct based on your project structure
+import Megumin from "../../img/Megumin.webp"; // Ensure the path is correct based on your project structure
 
 const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev";
 
@@ -69,6 +71,8 @@ const Isekai = () => {
       <h1>
         <strong>Isekai Anime List</strong>
       </h1>
+      <img src={Rimuru} alt="Rimuru" id="Rimuru" />
+      <img src={Megumin} alt="Megumin" id="Megumin" />
       <div className="backgroundBox">
         <p><strong>{isekaiList.length} Isekai Anime</strong></p>
         <p><Link to="/">

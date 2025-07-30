@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import TextInp from "./Input";
+import berserk from "../../img/berserk.png"; // Ensure the path is correct based on your project structure
+import broly from "../../img/broly.webp"; // Ensure the path is correct based on your project structure
 
 const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev";
 
@@ -69,6 +71,8 @@ const Movies = () => {
       <h1>
         <strong>Movie Anime List</strong>
       </h1>
+      <img src={berserk} alt="Berserk" id="berserk" />
+      <img src={broly} alt="Broly" id="broly" />
       <div className="backgroundBox">
         <p><strong>{movieList.length} Movie Anime</strong></p>
         <p><Link to="/">

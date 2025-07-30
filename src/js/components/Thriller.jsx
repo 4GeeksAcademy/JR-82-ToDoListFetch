@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import TextInp from "./Input";
+import Neverland from "../../img/Neverland.webp"; // Ensure the path is correct based on your project structure
+import Misa from "../../img/Misa.webp"; // Ensure the path is correct based on your project structure
 
 const API_BASE = "https://silver-succotash-g46jgv9qj4jx2pp-5000.app.github.dev";
 
@@ -69,6 +71,8 @@ const Thriller = () => {
       <h1>
         <strong>Thriller Anime List</strong>
       </h1>
+      <img src={Neverland} alt="Neverland" id="Neverland" />
+      <img src={Misa} alt="Misa" id="Misa" />
       <div className="backgroundBox">
         <p><strong>{thrillerList.length} Thriller Anime</strong></p>
         <p>
